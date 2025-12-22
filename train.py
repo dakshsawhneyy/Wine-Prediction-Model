@@ -13,7 +13,7 @@ import mlflow.sklearn
 def parse_args():
     p = argparse.ArgumentParser("Simple MLflow demo (wine prediction)")
     p.add_argument("--csv", default="data/wine.csv", help="Path to CSV (default: data/wine.csv)")
-    p.add_argument("--target", default="quality", help="Target column name (default: quality)")
+    p.add_argument("--target", default="Alcohol", help="Target column name (default: quality)")
     p.add_argument("--experiment", default="wine-prediction", help="MLflow experiment name")
     p.add_argument("--run", default="run-2", help="MLflow run name")
     p.add_argument("--n-estimators", type=int, default=50, help="RandomForest n_estimators (default: 50)")
@@ -26,7 +26,7 @@ def main():
     args = parse_args()
 
     # Set MLflow tracking URI from env or use default
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:7006")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000")
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment(args.experiment)
 
