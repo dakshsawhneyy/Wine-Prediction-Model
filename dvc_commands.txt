@@ -1,0 +1,7 @@
+pip install dvc
+
+dvc init
+git commit -m "Initialize DVC"
+
+dvc add wine.csv
+
