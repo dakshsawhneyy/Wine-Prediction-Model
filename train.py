@@ -74,6 +74,13 @@ def main():
         mlflow.log_metric("mse", float(mse))
         mlflow.log_metric("rmse", rmse)
         mlflow.log_metric("r2", r2)
+        
+        mlflow.sklearn.log_model(
+            model,
+            artifact_path="model",
+            registered_model_name="wine_rf_model"
+        )
+
 
 if __name__ == "__main__":
     main()

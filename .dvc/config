@@ -1,5 +1,0 @@
-[core]
-    remote = myremote
-['remote "myremote"']
-    url = azure://winepredictiondvc/data
-    account_name = winepredictiondvc
