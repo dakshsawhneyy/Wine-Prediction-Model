@@ -1,0 +1,19 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: wine-prediction-servicemonitor
+  labels:
+    release: monitor
+    app: wine-prediction 
+spec:
+  selector:
+    matchLabels:          # match service with metadata.labels.app = house-price-serving
+      app: wine-prediction     # MUST match labels in your Service
+  namespaceSelector:
+    matchNames:
+      - default             # your service is in default namespace
+  endpoints:
+    - port: http            # MUST match service.port.name
+      path: /metrics
+      interval: 10s
+      scrapeTimeout: 5s
