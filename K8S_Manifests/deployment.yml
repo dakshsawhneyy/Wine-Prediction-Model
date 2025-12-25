@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wine-prediction-deployment
+  labels:
+    app: wine-prediction
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wine-prediction
+  template:
+    metadata:
+      labels:
+        app: wine-prediction
+    spec:
+      containers:
+      - name: wine-prediction-model
+        image: dakshsawhneyy/wine-pred-serve:latest
+        ports:
+        - containerPort: 8000
+        env:
+          - name: MLFLOW_TRACKING_URI
+            valueFrom:
+              secretKeyRef:
+                name: wine-prediction-secret
+                key: tracking_uri
+          - name: MLFLOW_TRACKING_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: wine-prediction-secret
+                key: username
+          - name: MLFLOW_TRACKING_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wine-prediction-secret
+                key: password
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: "100m"  
+            memory: "128Mi" 
+          limits:
+            cpu: "200m"  
+            memory: "256Mi"
