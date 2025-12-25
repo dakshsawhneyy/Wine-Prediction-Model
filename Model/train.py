@@ -9,6 +9,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 import mlflow
 import mlflow.sklearn
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def parse_args():
     p = argparse.ArgumentParser("Simple MLflow demo (wine prediction)")
