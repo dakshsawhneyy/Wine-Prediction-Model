@@ -10,7 +10,7 @@ load_dotenv()
 MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI")
 
 MODEL_NAME = "wine_rf_model"
-MODEL_STAGE = "Development"
+MODEL_STAGE = "None"
 
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 
