@@ -9,17 +9,21 @@ variables:
   MLFLOW_TRACKING_USERNAME: $MLFLOW_TRACKING_USERNAME
   MLFLOW_TRACKING_PASSWORD: $MLFLOW_TRACKING_PASSWORD
 
-build-job:
+train-job:
   stage: train
   script:
-    - echo "Training the model"
+    - python Model/train.py
+  artifacts:
+    when: always
+    paths:
+      - mlruns/
 
-test-job:
+validate-job:
   stage: validate
   script:
     - echo "This job runs validation"
 
-register-job:
+registerclear-job:
   stage: register
   script:
     - echo "This job registers model"
