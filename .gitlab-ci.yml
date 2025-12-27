@@ -1,19 +1,30 @@
 stages:
-  - build 
-  - test
+  - train 
+  - validate
+  - register
   - deploy
 
+variables:
+  MLFLOW_TRACKING_URI: $MLFLOW_TRACKING_URI
+  MLFLOW_TRACKING_USERNAME: $MLFLOW_TRACKING_USERNAME
+  MLFLOW_TRACKING_PASSWORD: $MLFLOW_TRACKING_PASSWORD
+
 build-job:
-  stage: build
+  stage: train
   script:
-    - echo "Building the application"
+    - echo "Training the model"
 
 test-job:
-  stage: test
+  stage: validate
   script:
-    - echo "This job runs test"
+    - echo "This job runs validation"
+
+register-job:
+  stage: register
+  script:
+    - echo "This job registers model"
 
 deploy-job:
   stage: deploy
   script:
-    - echo "This job runs deploy"
+    - echo "This job deploys model"
