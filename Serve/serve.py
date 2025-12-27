@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 import mlflow
 import pandas as pd
 from pydantic import BaseModel
@@ -24,10 +24,21 @@ model = mlflow.pyfunc.load_model(
     model_uri=f"models:/{MODEL_NAME}/{MODEL_STAGE}"
 )
 
-
 # Prometheus Metrics
 PREDICTION_COUNT = Counter("prediction_requests_total", "Total predictions made")
 PREDICTION_LATENCY = Histogram("prediction_latency_seconds", "Latency for predictions")
+
+# feature logging
+FEATURE_HISTOGRAMS = {
+    "Alcohol": Histogram("feature_alcohol", "Alcohol distribution"),
+    "Malic.acid": Histogram("feature_malic_acid", "Malic acid distribution"),
+}
+
+# prediction logging
+PRED_HIST = Histogram(
+    "model_prediction",
+    "Prediction distribution"
+)
 
 app = FastAPI()
 
@@ -42,8 +53,17 @@ def health():
 @PREDICTION_LATENCY.time()
 def predict(data: WineFeatures):
     df = pd.DataFrame([data.features])
+    
     preds = model.predict(df)
+    PRED_HIST.observe(float(preds[0]))
+    
     PREDICTION_COUNT.inc()
+    
+    # Drift Detection
+    for f, hist in FEATURE_HISTOGRAMS.items():
+        if f in data.features:
+            hist.observe(float(data.features[f]))
+    
     return {"prediction": float(preds[0])}
 
 @app.get("/metrics")
