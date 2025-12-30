@@ -9,6 +9,12 @@ variables:
   MLFLOW_TRACKING_USERNAME: $MLFLOW_TRACKING_USERNAME
   MLFLOW_TRACKING_PASSWORD: $MLFLOW_TRACKING_PASSWORD
 
+
+before_script:
+  - python --version
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+
 train-job:
   stage: train
   script:
