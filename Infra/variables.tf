@@ -5,5 +5,9 @@ variable "region" {
 
 variable "project_name" {
   type    = string
-  default = "ecs-managed-orchestration"
+  default = "wine-pred-model"
+}
+
+variable "location" {
+  default = "Central India"
 }
