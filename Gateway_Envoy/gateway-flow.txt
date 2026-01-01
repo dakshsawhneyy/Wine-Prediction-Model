@@ -1,0 +1,13 @@
+curl (with Host header)
+   ↓
+Envoy Service (port-forward)
+   ↓
+Envoy Proxy (data plane)
+   ↓
+Gateway (listener :80)
+   ↓
+HTTPRoute (hostname + path match)
+   ↓
+wine-prediction-service
+   ↓
+ML inference pods
