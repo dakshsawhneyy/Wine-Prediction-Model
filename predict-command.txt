@@ -20,11 +20,56 @@ curl -X POST http://127.0.0.1:8000/predict \
 
 
 #### 2nd Command
-curl --verbose --header "Host: www.example.com" http://localhost:9090/health"
+curl --verbose --header "Host: mlops.dakshsawhneyy.online" http://localhost:9090/health
+curl --verbose --header "Host: mlops.dakshsawhneyy.online" http://mlops.dakshsawhneyy.online/health
 
 curl -X POST http://localhost:9090/predict \
   -H "Content-Type: application/json" \
-  -H "Host: www.example.com" \
+  -H "Host: mlops.dakshsawhneyy.online" \
+  -d '{
+    "features": {
+      "Wine": 1,
+      "Malic.acid": 1.71,
+      "Ash": 2.43,
+      "Acl": 15.6,
+      "Mg": 127,
+      "Phenols": 2.8,
+      "Flavanoids": 3.06,
+      "Nonflavanoid.phenols": 0.28,
+      "Proanth": 2.29,
+      "Color.int": 5.64,
+      "Hue": 1.04,
+      "OD": 3.92,
+      "Proline": 1065
+    }
+  }'
+
+
+# AKS
+curl -X POST http://4.187.222.219/predict \
+  -H "Content-Type: application/json" \
+  -H "Host: mlops.dakshsawhneyy.online" \
+  -d '{
+    "features": {
+      "Wine": 1,
+      "Malic.acid": 1.71,
+      "Ash": 2.43,
+      "Acl": 15.6,
+      "Mg": 127,
+      "Phenols": 2.8,
+      "Flavanoids": 3.06,
+      "Nonflavanoid.phenols": 0.28,
+      "Proanth": 2.29,
+      "Color.int": 5.64,
+      "Hue": 1.04,
+      "OD": 3.92,
+      "Proline": 1065
+    }
+  }'
+
+# DNS 
+curl -X POST http://mlops.dakshsawhneyy.online/predict \
+  -H "Content-Type: application/json" \
   -d '{
     "features": {
       "Wine": 1,
