@@ -46,7 +46,7 @@ curl -X POST http://localhost:9090/predict \
 
 
 # AKS
-curl -X POST http://4.187.222.219/predict \
+curl -X POST http://4.187.232.252/predict \
   -H "Content-Type: application/json" \
   -H "Host: mlops.dakshsawhneyy.online" \
   -d '{
