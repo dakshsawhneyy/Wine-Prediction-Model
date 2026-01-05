@@ -1,0 +1,30 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-limits-in-pods
+  namespace: kyverno
+spec:
+  # This makes the rule block deployments instead of just auditing them
+  validationFailureAction: Enforce
+  background: true
+  rules:
+  - name: allow-lb-nodeport-only
+    match:
+      any:
+      - resources:
+          kinds:
+          - Service
+    # gateway api can have loadbalancer service or nodeport service type
+    exclude:
+      any:
+      - resources:
+          selector:
+            matchLabels:
+              # Common label for services managed by Gateway API controllers
+              gateway.networking.k8s.io/gateway-name: "*"
+    validate: 
+      message: "Service types 'LoadBalancer' or 'NodePort' are not allowed for application workloads."
+      pattern:  
+        spec:
+          type: ClusterIP
+          # (type): "LoadBalancer | NodePort"
